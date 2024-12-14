@@ -7,6 +7,29 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .cart-section, .form-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .cart-items {
+            flex: 2;
         }
         .cart-item {
             display: flex;
@@ -17,43 +40,85 @@
             border-radius: 5px;
         }
         .cart-item img {
-            width: 100px;
+            width: 80px;
             height: auto;
             margin-right: 20px;
+            border-radius: 4px;
+        }
+        .cart-item div {
+            flex-grow: 1;
         }
         .cart-item button {
             padding: 5px 10px;
             margin-left: 10px;
             cursor: pointer;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
         }
-        .cart-item h3 {
-            margin: 0;
+        .form-section {
+            flex: 1;
+            flex-direction: column;
         }
-        .cart-item p {
-            margin: 5px 0;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        .cart-container {
-            max-width: 800px;
-            margin: auto;
-        }
-        .button-container {
-            margin-top: 20px;
-        }
-        .button-container button {
-            padding: 10px 20px;
+        input, select, button {
+            padding: 10px;
             font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
             cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .summary {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Your Cart</h1>
-    <div class="cart-container" id="cart-container"></div>
-    <h3 id="total-price"></h3>
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <div class="cart-section">
+            <!-- Cart Items -->
+            <div class="cart-items" id="cart-container"></div>
 
-    <div class="button-container">
-        <button onclick="goBack()">Back to Shop</button>
-        <button onclick="checkout()">Proceed to Checkout</button>
+            <!-- Shipping & Address Form -->
+            <div class="form-section">
+                <h2>Shipping Details</h2>
+                <form id="checkout-form">
+                    <select id="shipping-method">
+                        <option value="19.99">Flash Delivery - ₱19.99</option>
+                        <option value="4.99">J&T Express - ₱4.99</option>
+                    </select>
+                    <input type="text" id="first-name" placeholder="First Name" required>
+                    <input type="text" id="last-name" placeholder="Last Name" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="text" id="address" placeholder="Address" required>
+                    <input type="text" id="city" placeholder="City" required>
+                    <select id="country">
+                        <option value="Philippines">Philippines</option>
+                        <option value="Japan">Japan</option>
+                        <option value=" South Korea">South Korea</option>
+                    </select>
+                    <button type="button" onclick="checkout()">Proceed to Checkout</button>
+                </form>
+                <p id="total-price" class="summary"></p>
+            </div>
+        </div>
     </div>
 
     <!-- Link to external JavaScript file -->

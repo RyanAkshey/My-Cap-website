@@ -22,7 +22,8 @@ function loadCart() {
         totalPrice += item.price * item.quantity;
     });
 
-    totalPriceElement.textContent = `Total Price: ₱${totalPrice}`;
+    totalPriceElement.textContent = `Subtotal: ₱${totalPrice}`;
+    return totalPrice;
 }
 
 function removeFromCart(index) {
@@ -32,11 +33,6 @@ function removeFromCart(index) {
     loadCart();
 }
 
-function goBack() {
-    // Redirect to the shop page (update the link as needed)
-    window.location.href = "shop.html"; // Replace with your shop's page URL
-}
-
 function checkout() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
@@ -44,29 +40,27 @@ function checkout() {
         return;
     }
 
-    // Calculate total price
-    let totalPrice = 0;
-    cart.forEach(item => {
-        totalPrice += item.price * item.quantity;
-    });
+    const shippingCost = parseFloat(document.getElementById('shipping-method').value);
+    const totalPrice = loadCart() + shippingCost;
 
-    // Show confirmation and receipt
-    const confirmation = confirm(`Your total price is ₱${totalPrice}. Do you want to proceed to checkout?`);
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const country = document.getElementById('country').value;
+
+    if (!firstName || !lastName || !email || !address || !city || !country) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice}\nProceed to checkout?`);
     if (confirmation) {
-        alert(`Thank you for your purchase! Your receipt:\n\n${generateReceipt(cart, totalPrice)}`);
-        // Optionally clear the cart after checkout
+        alert(`Thank you for your purchase, ${firstName}!\n\nYour items will be shipped to:\n${address}, ${city}, ${country}`);
         localStorage.removeItem('cart');
         loadCart();
     }
-}
-
-function generateReceipt(cart, totalPrice) {
-    let receipt = "Receipt:\n\n";
-    cart.forEach(item => {
-        receipt += `${item.name} x${item.quantity} - ₱${item.price * item.quantity}\n`;
-    });
-    receipt += `\nTotal Price: ₱${totalPrice}`;
-    return receipt;
 }
 
 loadCart();
