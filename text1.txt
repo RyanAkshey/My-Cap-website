@@ -1,0 +1,201 @@
+import React, { useState, useEffect } from "react";
+import "./login.css";
+
+// Correcting image imports
+import insta1 from "/src/assets/insta/insta1.jpg";
+import insta2 from "/src/assets/insta/insta2.jpg";
+import insta3 from "/src/assets/insta/insta 3.jpg";
+
+const Login = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const slides = [
+    {
+      image: insta1,
+      heading: "Welcome Back to MyCap Store",
+      text: "Find the Cap that fits your style",
+    },
+    {
+      image: insta2,
+      heading: "Explore Our Collection",
+      text: "Caps for every occasion",
+    },
+    {
+      image: insta3,
+      heading: "Style Meets Comfort",
+      text: "Discover your perfect cap today",
+    },
+  ];
+
+  // Auto slide every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 2000); // Change slide every 2 seconds
+
+    return () => clearInterval(interval); // Clean up the interval on unmount
+  }, [slides.length]);
+
+  return (
+    <div className="login-container">
+      {/* Left Section */}
+      <div className="login-left">
+        <div className="login-logo">
+          <img src="/src/assets/main logo.jpg" alt="Logo" className="logo" />
+          <h1>MYCAP STORE</h1>
+        </div>
+        <h2>Log in to your account</h2>
+        <button className="google-login">
+          <img src="/src/assets/google.jpg" alt="Google Logo" className="google-logo" />
+          Log in with Google
+        </button>
+        <div className="separator">
+          <hr />
+          <span>OR</span>
+          <hr />
+        </div>
+        <form className="login-form">
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter your Email" required />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" required />
+          </div>
+          <button type="submit" className="login-button">
+            Log In
+          </button>
+        </form>
+        <p className="login-footer">
+          Don't have an account? <a href="/">Sign up</a>
+        </p>
+      </div>
+
+      {/* Right Section (Slider) */}
+      <div className="login-right">
+        <div className="slider">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`slider-item ${index === slideIndex ? "active" : ""}`}
+            >
+              <img
+                src={slide.image}
+                alt={`Slide ${index + 1}`}
+                className={`slider-image ${index === (slideIndex + 1) % slides.length ? "next" : ""}`}
+              />
+              <div className="slider-text">
+                <h1>{slide.heading}</h1>
+                <p>{slide.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+import React, { useState, useEffect } from "react";
+import "./login.css";
+
+// Correcting image imports
+import insta1 from "/src/assets/insta/insta1.jpg";
+import insta2 from "/src/assets/insta/insta2.jpg";
+import insta3 from "/src/assets/insta/insta 3.jpg";
+
+const Login = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  const slides = [
+    {
+      image: insta1,
+      heading: "Welcome Back to MyCap Store",
+      text: "Find the Cap that fits your style",
+    },
+    {
+      image: insta2,
+      heading: "Explore Our Collection",
+      text: "Caps for every occasion",
+    },
+    {
+      image: insta3,
+      heading: "Style Meets Comfort",
+      text: "Discover your perfect cap today",
+    },
+  ];
+
+  // Auto slide every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 2000); // Change slide every 2 seconds
+
+    return () => clearInterval(interval); // Clean up the interval on unmount
+  }, [slides.length]);
+
+  return (
+    <div className="login-container">
+      {/* Left Section */}
+      <div className="login-left">
+        <div className="login-logo">
+          <img src="/src/assets/main logo.jpg" alt="Logo" className="logo" />
+          <h1>MYCAP STORE</h1>
+        </div>
+        <h2>Log in to your account</h2>
+        <button className="google-login">
+          <img src="/src/assets/google.jpg" alt="Google Logo" className="google-logo" />
+          Log in with Google
+        </button>
+        <div className="separator">
+          <hr />
+          <span>OR</span>
+          <hr />
+        </div>
+        <form className="login-form">
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="Enter your Email" required />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" required />
+          </div>
+          <button type="submit" className="login-button">
+            Log In
+          </button>
+        </form>
+        <p className="login-footer">
+          Don't have an account? <a href="/">Sign up</a>
+        </p>
+      </div>
+
+      {/* Right Section (Slider) */}
+      <div className="login-right">
+        <div className="slider">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`slider-item ${index === slideIndex ? "active" : ""}`}
+            >
+              <img
+                src={slide.image}
+                alt={`Slide ${index + 1}`}
+                className={`slider-image ${index === (slideIndex + 1) % slides.length ? "next" : ""}`}
+              />
+              <div className="slider-text">
+                <h1>{slide.heading}</h1>
+                <p>{slide.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+
