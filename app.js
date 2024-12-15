@@ -14,7 +14,9 @@ function loadCart() {
             <div>
                 <h3>${item.name}</h3>
                 <p>Price: ₱${item.price}</p>
-                <p>Quantity: ${item.quantity}</p>
+                <p>Quantity: 
+                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+                </p>
             </div>
             <button onclick="removeFromCart(${index})">Remove</button>
         `;
@@ -31,6 +33,13 @@ function removeFromCart(index) {
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
     loadCart();
+}
+
+function updateQuantity(index, newQuantity) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart[index].quantity = parseInt(newQuantity, 10);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    loadCart();  // Reload the cart to reflect updated quantities and total price
 }
 
 function checkout() {
