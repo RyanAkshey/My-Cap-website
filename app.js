@@ -15,7 +15,9 @@ function loadCart() {
                 <h3>${item.name}</h3>
                 <p>Price: ₱${item.price}</p>
                 <p>Quantity: 
-                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+                    <button onclick="updateQuantity(${index}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateQuantity(${index}, 1)">+</button>
                 </p>
             </div>
             <button onclick="removeFromCart(${index})">Remove</button>
@@ -24,7 +26,7 @@ function loadCart() {
         totalPrice += item.price * item.quantity;
     });
 
-    totalPriceElement.textContent = `Subtotal: ₱${totalPrice}`;
+    totalPriceElement.textContent = `Subtotal: ₱${totalPrice.toFixed(2)}`;
     return totalPrice;
 }
 
@@ -35,11 +37,19 @@ function removeFromCart(index) {
     loadCart();
 }
 
-function updateQuantity(index, newQuantity) {
+function updateQuantity(index, change) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart[index].quantity = parseInt(newQuantity, 10);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();  // Reload the cart to reflect updated quantities and total price
+    if (cart[index]) {
+        cart[index].quantity += change;
+
+        // Ensure quantity is at least 1
+        if (cart[index].quantity < 1) {
+            cart[index].quantity = 1;
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart(); // Reload cart to reflect updated quantities
+    }
 }
 
 function checkout() {
@@ -64,7 +74,7 @@ function checkout() {
         return;
     }
 
-    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice}\nProceed to checkout?`);
+    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice.toFixed(2)}\nProceed to checkout?`);
     if (confirmation) {
         alert(`Thank you for your purchase, ${firstName}!\n\nYour items will be shipped to:\n${address}, ${city}, ${country}`);
         localStorage.removeItem('cart');
