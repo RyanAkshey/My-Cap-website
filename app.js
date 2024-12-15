@@ -58,16 +58,6 @@ function updateQuantity(index, change) {
 }
 
 // Send email with cart details
-function sendEmail(details) {
-    emailjs.send('service_281r8ib', 'template_z9upqoc', details, 'K_zG2gQp3nZQfRHY6')
-        .then((response) => {
-            alert('Order details sent successfully!');
-        })
-        .catch((error) => {
-            console.error('Error sending email:', error);
-            alert('Failed to send order details. Please try again.');
-        });
-}
 
 // Handle checkout process
 function checkout() {
