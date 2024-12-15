@@ -1,6 +1,7 @@
 const cartContainer = document.getElementById('cart-container');
 const totalPriceElement = document.getElementById('total-price');
 
+// Load cart items from localStorage and render them
 function loadCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     cartContainer.innerHTML = '';
@@ -15,33 +16,48 @@ function loadCart() {
                 <h3>${item.name}</h3>
                 <p>Price: ₱${item.price}</p>
                 <p>Quantity: 
-                    <input type="number" min="1" value="${item.quantity}" onchange="updateQuantity(${index}, this.value)">
+                    <button onclick="updateQuantity(${index}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateQuantity(${index}, 1)">+</button>
                 </p>
             </div>
             <button onclick="removeFromCart(${index})">Remove</button>
         `;
         cartContainer.appendChild(itemElement);
+
+        // Calculate total price
         totalPrice += item.price * item.quantity;
     });
 
-    totalPriceElement.textContent = `Subtotal: ₱${totalPrice}`;
+    totalPriceElement.textContent = `Subtotal: ₱${totalPrice.toFixed(2)}`;
     return totalPrice;
 }
 
+// Remove item from cart
 function removeFromCart(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.splice(index, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();
+    cart.splice(index, 1); // Remove item at specified index
+    localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+    loadCart(); // Reload cart
 }
 
-function updateQuantity(index, newQuantity) {
+// Update the quantity of an item
+function updateQuantity(index, change) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart[index].quantity = parseInt(newQuantity, 10);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();  // Reload the cart to reflect updated quantities and total price
+    if (cart[index]) {
+        cart[index].quantity += change;
+
+        // Ensure quantity doesn't go below 1
+        if (cart[index].quantity < 1) {
+            cart[index].quantity = 1;
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart
+        loadCart(); // Reload cart to reflect changes
+    }
 }
 
+// Handle checkout process
 function checkout() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
@@ -52,6 +68,7 @@ function checkout() {
     const shippingCost = parseFloat(document.getElementById('shipping-method').value);
     const totalPrice = loadCart() + shippingCost;
 
+    // Gather user details
     const firstName = document.getElementById('first-name').value;
     const lastName = document.getElementById('last-name').value;
     const email = document.getElementById('email').value;
@@ -64,12 +81,13 @@ function checkout() {
         return;
     }
 
-    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice}\nProceed to checkout?`);
+    // Confirmation alert
+    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice.toFixed(2)}\nProceed to checkout?`);
     if (confirmation) {
         alert(`Thank you for your purchase, ${firstName}!\n\nYour items will be shipped to:\n${address}, ${city}, ${country}`);
-        localStorage.removeItem('cart');
-        loadCart();
+        localStorage.removeItem('cart'); // Clear cart after checkout
+        loadCart(); // Reload empty cart
     }
 }
 
-loadCart();
+loadCart(); // Initial load of cart
