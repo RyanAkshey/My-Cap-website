@@ -57,6 +57,18 @@ function updateQuantity(index, change) {
     }
 }
 
+// Send email with cart details
+function sendEmail(details) {
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', details, 'YOUR_USER_ID')
+        .then((response) => {
+            alert('Order details sent successfully!');
+        })
+        .catch((error) => {
+            console.error('Error sending email:', error);
+            alert('Failed to send order details. Please try again.');
+        });
+}
+
 // Handle checkout process
 function checkout() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -84,6 +96,20 @@ function checkout() {
     // Confirmation alert
     const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice.toFixed(2)}\nProceed to checkout?`);
     if (confirmation) {
+        const orderDetails = {
+            firstName,
+            lastName,
+            email,
+            address,
+            city,
+            country,
+            totalPrice: totalPrice.toFixed(2),
+            cart: cart.map(item => `${item.name} (x${item.quantity}): ₱${item.price * item.quantity}`).join('\n')
+        };
+
+        // Send order details via email
+        sendEmail(orderDetails);
+
         alert(`Thank you for your purchase, ${firstName}!\n\nYour items will be shipped to:\n${address}, ${city}, ${country}`);
         localStorage.removeItem('cart'); // Clear cart after checkout
         loadCart(); // Reload empty cart
