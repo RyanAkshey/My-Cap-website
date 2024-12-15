@@ -12,44 +12,69 @@
 
         <style>
             .product img {
-                width: 100%;
-                height: auto;
-                box-sizing: border-box;
-                object-fit: cover;
+            width: 100%;
+            height: auto;
+            box-sizing: border-box;
+            object-fit: cover;
+        }
+        #featured > div:nth-child(2) > nav > ul > li.page-item.active > a {
+            background-color: black;
+        }
+        #featured > div:nth-child(2) > nav > ul > li:nth-child(n):hover > a {
+            background-color: gray;
+            color: white;
+        }
+        .pagination a {
+            color: #000;
+        }
+        #navbarSupportedContent > ul > li:nth-child(5) > a > i {
+            color: #000;
+        }
+        @media only screen and (max-width: 991px) {
+            body > nav > div > button:hover,
+            body > nav > div > button:focus {
+                background-color: #fb774b;
             }
-            #featured > div:nth-child(2) > nav > ul > li.page-item.active > a{
-                background-color: black;
+            body > nav > div > button:hover,
+            body > nav > div > button:focus {
+                color: #fff;
             }
-            #featured > div:nth-child(2) > nav > ul > li:nth-child(n):hover>a{
-                background-color: gray;
-                color: white;
+            #navbarSupportedContent > ul {
+                margin: 1rem;
+                justify-content: flex-end;
+                align-items: flex-end;
+                text-align: right;
             }
-            .pagination a{
-                color: #000;
+            #navbarSupportedContent > ul > li:nth-child(n) > a {
+                padding: 10px 0;
             }
-            #navbarSupportedContent > ul > li:nth-child(5) > a > i{
-                color: #000;
-            }
-            @media only screen and (max-width: 991px){
-    body > nav > div > button:hover,
-    body > nav > div > button:focus{
-        background-color: #fb774b;
-    }
-    body > nav > div > button:hover,
-    body > nav > div > button:focus{
-        color: #fff;
-    }
-    #navbarSupportedContent > ul{
-        margin: 1rem;
-        justify-content: flex-end;
-        align-items: flex-end;
-        text-align: right;
-    }
+        }
 
-    #navbarSupportedContent > ul > li:nth-child(n) > a{
-        padding: 10px 0;
-    }
-} 
+        /* Custom styles for search bar and filter */
+        .search-filter-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .search-filter-wrapper .form-control {
+            flex: 1;
+        }
+
+        .search-filter-wrapper .col-md-6 {
+            padding-right: 0;
+        }
+
+        /* Adjusting for smaller screens */
+        @media (max-width: 768px) {
+            .search-filter-wrapper {
+                flex-direction: column;
+            }
+
+            .search-filter-wrapper .form-control {
+                margin-bottom: 10px;
+            }
+        }
         </style>
     </head>
     <body>
@@ -86,7 +111,7 @@
         <section id="featured" class="my-5 py-5">
             <div class="container mt-5 py-5">
                 <div class="container my-4">
-                    <div class="row">
+                    <div class="row search-filter-wrapper">
                         <div class="col-md-6">
                             <input type="text" id="searchBar" class="form-control" placeholder="Search products...">
                         </div>
@@ -100,8 +125,8 @@
                     </div>
                 </div>
                 <!-- Product Container -->
-                <section id="featured" class="my-5 py-5">
-                    <div data-brand="Adidas" class="container mt-5 py-5">
+            
+                    <div id="productContainer" class="container mt-5 py-5">
                         <h2 class="font-weight-bold">Adidas</h2>
                         <hr>
                         <p>Top things off with a cap from our extensive selection of baseball caps and more. 
@@ -166,7 +191,7 @@
                                       <button class="buy-btn">View Now</button>
                                     </div>
                                     
-                        <div data-brand="Nike" class="container mt-5 py-5">
+                        <div id="productContainer" class="container mt-5 py-5">
                             <h2 class="font-weight-bold">Nike</h2>
                             <hr>
                             <p>Elevate your style with Nike's collection of versatile caps. 
@@ -232,7 +257,6 @@
                                 
                             
                     </div>
-                </section>
         
            
         </div>
