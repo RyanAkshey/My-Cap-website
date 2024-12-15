@@ -2,12 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="main logo.jpg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buy Now Page</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .cart-section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item-image {
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .btn {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white py-1 fixed-top">
+        <div class="container">
+          <img src="main logo2.png" width="110" height="80"><a>MyCap Store</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span><i id="bar" class="fa fa-navicon"></i></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto" >
+             
+              <li class="nav-item">
+                <a class="nav-link active" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="shop.html">Shop</a>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="add.html">
+                  <i class="fa fa-shopping-bag"></i>
+              </a>
+                
+                </i>
+              </li>
+             
+          </div>
+        </div>
+      </nav>
+
+
     <div class="container mt-5">
         <div class="row">
             <!-- Left Section: Shipping and Address -->
@@ -63,24 +129,80 @@
                 <div class="cart-section">
                     <!-- Cart Items -->
                     <div class="cart-items" id="cart-container"></div>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <span>₱25.34</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Shipping</span>
-                        <span>₱19.99</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between font-weight-bold">
-                        <span>Total</span>
-                        <span>₱45.33</span>
-                    </li>
-                </ul>
-                <button class="btn btn-primary btn-block mt-3" id="buyNow">Buy Now</button>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <span>₱25.34</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Shipping</span>
+                            <span>₱19.99</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between font-weight-bold">
+                            <span>Total</span>
+                            <span>₱45.33</span>
+                        </li>
+                    </ul>
+                    <button class="btn btn-primary btn-block mt-3" id="buyNow">Buy Now</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <footer class="mt-5 py-5">
+        <div class="row container mx-auto pt-5">
+            <div class="footer-one col-lg-3 col-md-6 col-12">
+                <img src="main logo.jpg" alt="Logo" width="80" height="80">
+                <p class="pt-3">Excited to unveil Mycap Store—designed for a seamless shopping experience with top-notch front-end and back-end development. Stay tuned for more updates!</p>
+            </div>
+            <div class="footer-one col-lg-3 col-md-6 col-12 mb-3">
+                <h5 class="pb-2">Featured</h5>
+                <ul class="text-uppercase list-unstyled">
+                    <li><a href="">Adidas</a></li>
+                    <li><a href="">Nike</a></li>
+                </ul>
+            </div>
+            <div id="contact" class="footer-one col-lg-3 col-md-6 col-12 mb-3">
+                <h5 class="pb-2">Contact Us</h5>
+                <div>
+                    <p>Do you have any queries or suggestions?</p>
+                </div> 
+                <div>
+                    <h6 class="text-uppercase">Email</h6>
+                    <p>ryanansay123@gmail.com</p>
+                </div>
+                <div>
+                    <h6 class="text-uppercase">Phone</h6>
+                    <p>If you need support? Just give as a call. 
+                        +63 946 730 5483</p>
+                </div>
+               
+            </div>
+            <div class="footer-one col-lg-3 col-md-6 col-12 mb-3">
+                <h5 class="pb-2">Instagram</h5>
+                <div class="row">
+                    <img class="img-fluid w-25 h-100 m-2" src="insta/insta1.jpg" alt="Instagram Image">
+                    <img class="img-fluid w-25 h-100 m-2" src="insta/insta2.jpg" alt="Instagram Image">
+                    <img class="img-fluid w-25 h-100 m-2" src="insta/insta3.jpg" alt="Instagram Image">
+                    <img class="img-fluid w-25 h-100 m-2" src="insta/insta4.jpg" alt="Instagram Image">
+                    <img class="img-fluid w-25 h-100 m-2" src="insta/insta5.jpg" alt="Instagram Image">
+                </div>
+            </div>
+        </div>
+        <div class="copyright mt-5">
+            <div class="row container mx-auto">
+                <div class="col-lg-3 col-md-6 col-12 mb-4">
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 text-nowrap mb-2">
+                    <p>MyCap eCommerce © 2024. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+      </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIKbN9S7StjXgFExm3zLlg3g2xDZOQ1ZXhu7vYg7bD3X4IRkdG0YCT" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-oP6KFn8q5x57t9zvwf2Ttkq5iZ8h3b1L5xVghKpiUHzp6IlLjp+5sHys8Qe1E4SK" crossorigin="anonymous"></script>
 
     <script src="shop.js"></script>
 </body>
