@@ -14,6 +14,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     const data = await response.json();
     if (data.success) {
         alert('Registration successful');
+        window.location.href = 'log.html';
     } else {
         alert('Error: ' + data.message);
     }
