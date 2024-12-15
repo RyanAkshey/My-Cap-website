@@ -22,7 +22,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
 // Login User
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("emailLogin").value;
+    const email = document.getElementById("username").value;
     const password = document.getElementById("passwordLogin").value;
 
     const response = await fetch('/api/login', {
@@ -35,6 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     if (data.success) {
         localStorage.setItem('token', data.token);
         alert('Login successful');
+        window.location.href = 'index.html';
     } else {
         alert('Error: ' + data.message);
     }
@@ -44,5 +45,5 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 document.getElementById("logoutButton").addEventListener("click", () => {
     localStorage.removeItem('token');
     alert('Logged out successfully');
-    window.location.href = 'index.html';
+    window.location.href = 'log.html';
 });
