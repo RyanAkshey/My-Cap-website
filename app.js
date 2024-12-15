@@ -59,7 +59,7 @@ function updateQuantity(index, change) {
 
 // Send email with cart details
 function sendEmail(details) {
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', details, 'YOUR_USER_ID')
+    emailjs.send('service_281r8ib', 'template_z9upqoc', details, 'K_zG2gQp3nZQfRHY6')
         .then((response) => {
             alert('Order details sent successfully!');
         })
