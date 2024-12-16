@@ -1,28 +1,43 @@
-<?php 
+<?php
 include 'dbconn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate required POST data
+    $required_fields = ['first_name', 'last_name', 'email', 'address', 'city', 'country', 'shipping_method', 'cart_data'];
+    foreach ($required_fields as $field) {
+        if (empty($_POST[$field])) {
+            die("Error: Missing $field.");
+        }
+    }
+
     // Collect POST data
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $address = $_POST['address'];
-    $city = $_POST['city'];
-    $country = $_POST['country'];
+    $first_name = $conn->real_escape_string($_POST['first_name']);
+    $last_name = $conn->real_escape_string($_POST['last_name']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $address = $conn->real_escape_string($_POST['address']);
+    $city = $conn->real_escape_string($_POST['city']);
+    $country = $conn->real_escape_string($_POST['country']);
     $shipping_cost = (float)$_POST['shipping_method'];
     $cart_data = json_decode($_POST['cart_data'], true);
+
+    if (!$cart_data) {
+        die("Error: Invalid cart data.");
+    }
 
     // Calculate total price
     $total_price = $shipping_cost;
     $items_list = "";
 
     foreach ($cart_data as $item) {
-        $total_price += $item['price'] * $item['quantity'];
-        $items_list .= "{$item['name']} (x{$item['quantity']}): ₱" . ($item['price'] * $item['quantity']) . "\n";
+        $item_name = $conn->real_escape_string($item['name']);
+        $item_price = (float)$item['price'];
+        $item_quantity = (int)$item['quantity'];
+        $total_price += $item_price * $item_quantity;
+        $items_list .= "$item_name (x$item_quantity): ₱" . ($item_price * $item_quantity) . "\n";
     }
 
-    // Insert data into database
-    $items_list_db = json_encode($cart_data);
+    // Insert data into the database
+    $items_list_db = $conn->real_escape_string(json_encode($cart_data));
     $sql = "INSERT INTO orders (first_name, last_name, email, address, city, country, total_price, items)
             VALUES ('$first_name', '$last_name', '$email', '$address', '$city', '$country', '$total_price', '$items_list_db')";
 
@@ -48,9 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<h3>Order placed, but email failed to send.</h3>";
         }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $conn->error;
     }
 
     $conn->close();
+} else {
+    echo "Invalid request method.";
 }
 ?>

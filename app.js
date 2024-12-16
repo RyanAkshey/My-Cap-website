@@ -23,6 +23,7 @@ function loadCart() {
 
     totalPriceElement.textContent = `Subtotal: ₱${totalPrice.toFixed(2)}`;
     cartDataInput.value = JSON.stringify(cart); // Pass cart data to hidden input
+    console.log("Cart Data Sent:", JSON.stringify(cart)); // Debugging output
     return totalPrice;
 }
 
