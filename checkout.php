@@ -1,58 +1,56 @@
 <?php
+header("Content-Type: application/json");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 include 'dbconn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Decode JSON data
-    $input = file_get_contents('php://input');
+    // Get JSON input
+    $input = file_get_contents("php://input");
     $data = json_decode($input, true);
 
     if (!$data) {
-        die("Error: Invalid input data.");
+        echo json_encode(["status" => "error", "message" => "Invalid input."]);
+        exit;
     }
 
-    // Validate required data
-    $required_fields = ['first_name', 'last_name', 'email', 'address', 'city', 'country', 'shipping_method', 'cart_data'];
-    foreach ($required_fields as $field) {
-        if (empty($data[$field])) {
-            die("Error: Missing $field.");
-        }
-    }
-
-    // Collect and sanitize data
+    // Extract data and sanitize
     $first_name = $conn->real_escape_string($data['first_name']);
     $last_name = $conn->real_escape_string($data['last_name']);
     $email = $conn->real_escape_string($data['email']);
     $address = $conn->real_escape_string($data['address']);
     $city = $conn->real_escape_string($data['city']);
     $country = $conn->real_escape_string($data['country']);
-    $shipping_cost = (float)$data['shipping_method'];
-    $cart_data = json_decode($data['cart_data'], true);
+    $shipping_method = (float)$data['shipping_method'];
+    $cart_data = $data['cart_data'];
 
-    if (!$cart_data) {
-        die("Error: Invalid cart data.");
+    $cart = json_decode($cart_data, true);
+    if (!$cart) {
+        echo json_encode(["status" => "error", "message" => "Invalid cart data."]);
+        exit;
     }
 
-    // Calculate total price
-    $total_price = $shipping_cost;
-    foreach ($cart_data as $item) {
-        $total_price += $item['price'] * $item['quantity'];
+    // Calculate subtotal
+    $subtotal = 0;
+    foreach ($cart as $item) {
+        $subtotal += $item['price'] * $item['quantity'];
     }
+    $total_price = $subtotal + $shipping_method;
 
-    // Insert order into database
-    $sql = "INSERT INTO orders (first_name, last_name, email, address, city, country, shipping_method, subtotal, order_date)
-            VALUES ('$first_name', '$last_name', '$email', '$address', '$city', '$country', '$shipping_cost', '$total_price', NOW())";
+    // Insert order into the database
+    $cart_items = $conn->real_escape_string(json_encode($cart));
+    $sql = "INSERT INTO orders (first_name, last_name, email, address, city, country, shipping_method, subtotal, total_price, order_date)
+            VALUES ('$first_name', '$last_name', '$email', '$address', '$city', '$country', $shipping_method, $subtotal, $total_price, NOW())";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Order placed successfully!";
+        echo json_encode(["status" => "success", "message" => "Order placed successfully."]);
     } else {
-        echo "Error: " . $conn->error;
+        echo json_encode(["status" => "error", "message" => "Database error: " . $conn->error]);
     }
 
     $conn->close();
 } else {
-    echo "Invalid request method.";
+    echo json_encode(["status" => "error", "message" => "Invalid request method."]);
 }
 ?>
