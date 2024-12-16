@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 include 'dbconn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -62,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "<h3>Order placed, but email failed to send.</h3>";
         }
+
+        // Redirect to index.html after 5 seconds
+        echo '<script type="text/javascript">
+                setTimeout(function() {
+                    window.location.href = "index.html";
+                }, 5000); // Redirect after 5 seconds
+              </script>';
     } else {
         echo "Error: " . $conn->error;
     }
