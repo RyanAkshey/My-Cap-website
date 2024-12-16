@@ -51,16 +51,16 @@
             flex-grow: 1;
         }
         .cart-item button {
-        padding: 5px 8px; /* Reduced padding for a smaller button */
-         margin-left: 10px;
-        cursor: pointer;
-        background-color: #ff4d4d;
-         color: white;
-         border: none;
-        border-radius: 4px;
-        width: auto; /* Ensures the button size adapts to the content */
-        min-width: 70px; /* Optional: Set a minimum width for consistency */
-        text-align: center; /* Center-align text */
+            padding: 5px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: auto;
+            min-width: 70px;
+            text-align: center;
         }
 
         .form-section {
@@ -95,21 +95,21 @@
         }
 
         .back-button {
-    margin-bottom: 20px;
-    padding: 12px 25px; /* Slightly larger padding for better usability */
-    background-color: #000000;
-    color: white;
-    border: none;
-    border-radius: 8px; /* More rounded for a modern look */
-    font-size: 16px; /* Matches other button fonts */
-    font-weight: bold; /* Makes the text more prominent */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Adds a smooth hover effect */
-}
+            margin-bottom: 20px;
+            padding: 12px 25px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.back-button:hover {
-    background-color: #38393a; /* Subtle hover color change */
-}
+        .back-button:hover {
+            background-color: #38393a;
+        }
 
     </style>
 </head>
@@ -125,7 +125,7 @@
             <div class="cart-items" id="cart-container"></div>
             <div class="form-section">
                 <h2>Shipping Details</h2>
-                <form id="checkout-form" method="POST">
+                <form id="checkout-form" >
                     <select id="shipping_method" name="shipping_method" required>
                         <option value="59.99">Flash Delivery - ₱59.99</option>
                         <option value="56.99">J&T Express - ₱56.99</option>
