@@ -151,7 +151,7 @@
         <h1>Shopping Cart</h1>
         <div id="cart-container"></div>
         <h2>Shipping Details</h2>
-        <form method="POST">
+        <form method="POST" action="dbconn.php">
             <select id="shipping-method">
                 <option value="69.99">Flash Delivery - ₱69.99</option>
                 <option value="54.99">J&T Express - ₱54.99</option>
@@ -164,7 +164,7 @@
             <select id="country">
                 <option value="Philippines">Philippines</option>
             </select>
-            <button type="button" onclick="checkout()">Proceed to Checkout</button>
+            <button type="button">Proceed to Checkout</button>
         </form>
         <p id="total-price" class="summary"></p>
     </div>
