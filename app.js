@@ -1,5 +1,5 @@
 async function checkout(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
@@ -7,7 +7,6 @@ async function checkout(event) {
         return;
     }
 
-    // Collect user details
     const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
@@ -21,7 +20,6 @@ async function checkout(event) {
         return;
     }
 
-    // Calculate totals
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalPrice = subtotal + shippingMethod;
 
@@ -37,7 +35,6 @@ async function checkout(event) {
     };
 
     try {
-        // Send the order data to the backend
         const response = await fetch('checkout.php', {
             method: 'POST',
             headers: {
@@ -46,15 +43,11 @@ async function checkout(event) {
             body: JSON.stringify(orderData),
         });
 
-        const result = await response.text();
-        if (response.ok) {
+        const result = await response.json();
+        if (response.ok && result.status === "success") {
             alert("Order placed successfully!");
 
-            // Clear the cart after a successful response
-            localStorage.removeItem('cart'); 
-            loadCart(); // Reload the cart to show it's empty
-
-            // Optionally redirect or display confirmation on the page
+            localStorage.removeItem('cart');
             document.body.innerHTML = `
                 <div class="container">
                     <h1>Thank you for your order, ${firstName}!</h1>
@@ -63,14 +56,42 @@ async function checkout(event) {
                 </div>
             `;
         } else {
-            console.error('Server error:', result);
-            alert("Failed to place the order. Please try again.");
+            alert("Failed to place the order: " + result.message);
         }
     } catch (error) {
-        console.error('Error during checkout:', error);
-        alert("An error occurred while processing your order. Please try again.");
+        console.error('Error:', error);
+        alert("An error occurred while processing your order.");
     }
 }
 
-// Initial cart rendering
+// Load cart items on page load (if applicable)
+function loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById('cart-container');
+    const totalPriceElem = document.getElementById('total-price');
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        totalPriceElem.textContent = "";
+        return;
+    }
+
+    let totalPrice = 0;
+    cartContainer.innerHTML = cart.map(item => {
+        totalPrice += item.price * item.quantity;
+        return `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div>
+                    <h5>${item.name}</h5>
+                    <p>Price: ₱${item.price.toFixed(2)}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    totalPriceElem.textContent = `Total Price: ₱${totalPrice.toFixed(2)}`;
+}
+
 loadCart();
