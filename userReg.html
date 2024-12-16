@@ -48,12 +48,26 @@
     .btn:hover {
       background-color: #545454;
     }
+     /* Close button styles */
+     .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: #333;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .close-btn:hover {
+      color: #5e5e5e;
+    }
   </style>
 </head>
 <body>
   <!-- Background iframe -->
   <iframe src="index.html"></iframe>
-
+  <button class="close-btn" onclick="closeLogin()">×</button> <!-- Close button -->
   <!-- Authentication container -->
   <div class="auth-container">
     <img src="main logo.jpg" alt="Logo">

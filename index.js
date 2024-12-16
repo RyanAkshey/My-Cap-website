@@ -45,6 +45,11 @@
 
   // User login/logout/register navigation
   document.querySelector('.fa-user-circle-o').addEventListener('click', () => {
-    window.location.href = 'userLog.html'; // Change this to the user authentication page URL
-  });
+    window.location.href = 'userLog.html'; // Redirect to login page
+});
+
+
+  function closeRegistration() {
+    window.location.href = 'index.html'; // Redirect to the home page or another page
+  }
 
