@@ -45,6 +45,6 @@
 
   // User login/logout/register navigation
   document.querySelector('.fa-user-circle-o').addEventListener('click', () => {
-    window.location.href = 'user.html'; // Change this to the user authentication page URL
+    window.location.href = 'userLog.html'; // Change this to the user authentication page URL
   });
 
