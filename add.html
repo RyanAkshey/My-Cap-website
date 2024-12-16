@@ -113,7 +113,7 @@
 
     <div class="container">
         <!-- Back Button -->
-        <button class="back-button" onclick="window.location.href='shop.html'">Back to Shop</button>
+        <button class="back-button" onclick="window.location.href='#shop'">Back to Shop</button>
 
         <h1>Shopping Cart</h1>
         <div class="cart-section">
@@ -124,12 +124,12 @@
             <div class="form-section">
                 <h2>Shipping Details</h2>
                 <form id="checkout-form" method="POST" action="dbconn.php">
-                    <select id="shipping-method">
+                    <select id="shipping_method">
                         <option value="19.99">Flash Delivery - ₱59.99</option>
                         <option value="4.99">J&T Express - ₱56.99</option>
                     </select>
-                    <input type="text" id="first-name" placeholder="First Name" required>
-                    <input type="text" id="last-name" placeholder="Last Name" required>
+                    <input type="text" id="first_name" placeholder="First Name" required>
+                    <input type="text" id="last_name" placeholder="Last Name" required>
                     <input type="email" id="email" name="email" placeholder="email" required>
                     <input type="text" id="address" placeholder="Address" required>
                     <input type="text" id="city" placeholder="City" required>

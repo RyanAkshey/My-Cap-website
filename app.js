@@ -67,12 +67,12 @@ function checkout() {
         return;
     }
 
-    const shippingCost = parseFloat(document.getElementById('shipping-method').value);
+    const shippingCost = parseFloat(document.getElementById('shipping_method').value);
     const totalPrice = loadCart() + shippingCost;
 
     // Gather user details
-    const firstName = document.getElementById('first-name').value;
-    const lastName = document.getElementById('last-name').value;
+    const firstName = document.getElementById('first_name').value;
+    const lastName = document.getElementById('last_name').value;
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const city = document.getElementById('city').value;
