@@ -1,13 +1,13 @@
-async function checkout() {
+async function checkout(event) {
+    event.preventDefault(); // Prevent default form submission
+
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
     }
 
-    const shippingCost = parseFloat(document.getElementById('shipping-method').value);
-
-    // Gather user details
+    const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -20,15 +20,9 @@ async function checkout() {
         return;
     }
 
-    // Calculate total price
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const totalPrice = subtotal + shippingCost;
+    const totalPrice = subtotal + shippingMethod;
 
-    // Confirmation alert
-    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice.toFixed(2)}\nProceed to checkout?`);
-    if (!confirmation) return;
-
-    // Prepare data to send
     const orderData = {
         first_name: firstName,
         last_name: lastName,
@@ -36,7 +30,7 @@ async function checkout() {
         address,
         city,
         country,
-        shipping_method: shippingCost,
+        shipping_method: shippingMethod,
         cart_data: JSON.stringify(cart),
     };
 
@@ -63,3 +57,6 @@ async function checkout() {
         alert("An error occurred while processing your order. Please try again.");
     }
 }
+
+// Initial cart rendering
+loadCart();

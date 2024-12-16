@@ -150,9 +150,11 @@
         <button class="btn btn-dark mb-3" onclick="window.location.href='index.html'">Back to Home</button>
         <h1>Shopping Cart</h1>
         <div id="cart-container"></div>
+        <p id="total-price" class="summary"></p>
+
         <h2>Shipping Details</h2>
-        <form method="POST" action="dbconn.php">
-            <select id="shipping-method">
+        <form id="checkout-form" onsubmit="checkout(event)">
+            <select id="shipping-method" required>
                 <option value="69.99">Flash Delivery - ₱69.99</option>
                 <option value="54.99">J&T Express - ₱54.99</option>
             </select>
@@ -161,12 +163,11 @@
             <input type="email" id="email" placeholder="Email" required>
             <input type="text" id="address" placeholder="Address" required>
             <input type="text" id="city" placeholder="City" required>
-            <select id="country">
+            <select id="country" required>
                 <option value="Philippines">Philippines</option>
             </select>
-            <button type="button" onclick="checkout()">Proceed to Checkout</button>
+            <button type="submit">Proceed to Checkout</button>
         </form>
-        <p id="total-price" class="summary"></p>
     </div>
     <script src="app.js" defer></script>
 
