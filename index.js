@@ -1,14 +1,18 @@
 
   //nav active link
+
   document.addEventListener("DOMContentLoaded", () => {
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
 
     function updateActiveLink() {
       let currentSection = "";
+
       sections.forEach((section) => {
-        const sectionTop = section.offsetTop - 50; // Adjust for navbar height
-        if (window.scrollY >= sectionTop) {
+        const sectionTop = section.offsetTop - 50; // Adjust for navbar height if necessary
+        const sectionBottom = sectionTop + section.offsetHeight;
+
+        if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
           currentSection = section.getAttribute("id");
         }
       });
@@ -21,8 +25,14 @@
       });
     }
 
+    // Update active link on scroll
     window.addEventListener("scroll", updateActiveLink);
+
+    // Update active link when page loads to ensure the correct link is active
+    updateActiveLink();
   });
+
+
   //slider ng about
   const sliderImages = document.getElementById('sliderImages');
   let currentIndex = 0;
