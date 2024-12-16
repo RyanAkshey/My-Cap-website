@@ -146,21 +146,28 @@
     </style>
 </head>
 <body>
-    <form id="checkout-form" onsubmit="checkout(event)" autocomplete="on">
-        <select id="shipping-method" required autocomplete="off">
-            <option value="69.99">Flash Delivery - ₱69.99</option>
-            <option value="54.99">J&T Express - ₱54.99</option>
-        </select>
-        <input type="text" id="first-name" placeholder="First Name" required autocomplete="given-name">
-        <input type="text" id="last-name" placeholder="Last Name" required autocomplete="family-name">
-        <input type="email" id="email" placeholder="Email" required autocomplete="email">
-        <input type="text" id="address" placeholder="Address" required autocomplete="street-address">
-        <input type="text" id="city" placeholder="City" required autocomplete="address-level2">
-        <select id="country" required autocomplete="country">
-            <option value="Philippines">Philippines</option>
-        </select>
-        <button type="submit">Proceed to Checkout</button>
-    </form>    
+    <div class="container">
+        <button class="btn btn-dark mb-3" onclick="window.location.href='index.html'">Back to Home</button>
+        <h1>Shopping Cart</h1>
+        <div id="cart-container"></div>
+        <p id="total-price" class="summary"></p>
+
+        <h2>Shipping Details</h2>
+        <form id="checkout-form" onsubmit="checkout(event)">
+            <select id="shipping-method" required>
+                <option value="69.99">Flash Delivery - ₱69.99</option>
+                <option value="54.99">J&T Express - ₱54.99</option>
+            </select>
+            <input type="text" id="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="address" placeholder="Address" required>
+            <input type="text" id="city" placeholder="City" required>
+            <select id="country" required>
+                <option value="Philippines">Philippines</option>
+            </select>
+            <button type="submit">Proceed to Checkout</button>
+        </form>
     </div>
     <script src="app.js" defer></script>
 
