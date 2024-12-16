@@ -95,25 +95,33 @@
         }
 
         .back-button {
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background-color: #000000;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    margin-bottom: 20px;
+    padding: 12px 25px; /* Slightly larger padding for better usability */
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px; /* More rounded for a modern look */
+    font-size: 16px; /* Matches other button fonts */
+    font-weight: bold; /* Makes the text more prominent */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Adds a smooth hover effect */
+}
 
-        .back-button:hover {
-            background-color: #7b7b7b;
-        }
+.back-button:hover {
+    background-color: #38393a; /* Subtle hover color change */
+}
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <!-- Back Button -->
-        <button class="back-button" onclick="window.location.href='#shop';">Back to Shop</button>
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.location.href='index.html';">
+                            Back to Home
+        </button>
+
 
         <h1>Shopping Cart</h1>
         <div class="cart-section">
