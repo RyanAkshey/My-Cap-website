@@ -115,35 +115,26 @@
 </head>
 <body>
     <div class="container">
-        <!-- Back Button -->
-        <button class="back-button" onclick="window.location.href='index.html';">
-            Back to Home
-        </button>
-
+        <button class="btn btn-dark mb-3" onclick="window.location.href='index.html'">Back to Home</button>
         <h1>Shopping Cart</h1>
-        <div class="cart-section">
-            <div class="cart-items" id="cart-container"></div>
-            <div class="form-section">
-                <h2>Shipping Details</h2>
-                <form id="checkout-form" >
-                    <select id="shipping_method" name="shipping_method" required>
-                        <option value="59.99">Flash Delivery - ₱59.99</option>
-                        <option value="56.99">J&T Express - ₱56.99</option>
-                    </select>
-                    <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
-                    <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                    <input type="text" id="address" name="address" placeholder="Address" required>
-                    <input type="text" id="city" name="city" placeholder="City" required>
-                    <select id="country" name="country" required>
-                        <option value="Philippines">Philippines</option>
-                    </select>
-                    <input type="hidden" id="cart_data" name="cart_data">
-                    <button type="submit">Proceed to Checkout</button>
-                </form>
-                <p id="total-price" class="summary"></p>
-            </div>
-        </div>
+        <div id="cart-container"></div>
+        <h2>Shipping Details</h2>
+        <form>
+            <select id="shipping-method">
+                <option value="69.99">Flash Delivery - ₱69.99</option>
+                <option value="54.99">J&T Express - ₱54.99</option>
+            </select>
+            <input type="text" id="first-name" placeholder="First Name" required>
+            <input type="text" id="last-name" placeholder="Last Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="address" placeholder="Address" required>
+            <input type="text" id="city" placeholder="City" required>
+            <select id="country">
+                <option value="Philippines">Philippines</option>
+            </select>
+            <button type="button" onclick="checkout()">Proceed to Checkout</button>
+        </form>
+        <p id="total-price" class="summary"></p>
     </div>
     <script src="app.js"></script>
 </body>

@@ -1,111 +1,93 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Sample product data
-    const products = [];
-    const cartData = [];
+const cartContainer = document.getElementById('cart-container');
+const totalPriceElement = document.getElementById('total-price');
 
-    // Function to display all available products
-    function displayAvailableProducts() {
-        const productsContainer = document.getElementById("products-container");
-        productsContainer.innerHTML = ''; // Clear existing products before displaying
+// Load cart items from localStorage and render them
+function loadCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartContainer.innerHTML = '';
+    let totalPrice = 0;
 
-        products.forEach(product => {
-            const productDiv = document.createElement("div");
-            productDiv.classList.add("product");
-            productDiv.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" width="100">
-                <h4>${product.name}</h4>
-                <p>₱${product.price}</p>
-                <input type="checkbox" id="product-${product.id}" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" class="select-product">
-            `;
-            productsContainer.appendChild(productDiv);
-        });
-    }
+    cart.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <div>
+                <h3>${item.name}</h3>
+                <p>Price: ₱${item.price}</p>
+                <p>Quantity: 
+                    <button onclick="updateQuantity(${index}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                </p>
+            </div>
+            <button onclick="removeFromCart(${index})">Remove</button>
+        `;
+        cartContainer.appendChild(itemElement);
 
-    // Function to update cart based on selected products
-    function updateCart() {
-        const selectedProducts = document.querySelectorAll(".select-product:checked");
-        const cartContainer = document.getElementById("cart-container");
-        cartData.length = 0; // Reset cart data
-
-        cartContainer.innerHTML = ''; // Clear cart before updating
-
-        selectedProducts.forEach(checkbox => {
-            const productId = parseInt(checkbox.getAttribute("data-id"));
-            const productName = checkbox.getAttribute("data-name");
-            const productPrice = parseFloat(checkbox.getAttribute("data-price"));
-            
-            cartData.push({
-                id: productId,
-                name: productName,
-                image: `product${productId}.jpg`, // Adjust image path if necessary
-                price: productPrice,
-                quantity: 1 // You can allow quantity change if needed
-            });
-        });
-
-        // Display cart items
-        displayCartItems();
-    }
-
-    // Function to display cart items
-    function displayCartItems() {
-        const cartContainer = document.getElementById("cart-container");
-        let totalPrice = 0;
-
-        cartData.forEach(item => {
-            totalPrice += item.price * item.quantity;
-            const cartItemDiv = document.createElement("div");
-            cartItemDiv.classList.add("cart-item");
-            cartItemDiv.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div>
-                    <h4>${item.name}</h4>
-                    <p>₱${item.price} x ${item.quantity}</p>
-                </div>
-                <button onclick="removeItem(${item.id})">Remove</button>
-            `;
-            cartContainer.appendChild(cartItemDiv);
-        });
-
-        // Update total price
-        const totalPriceElement = document.getElementById("total-price");
-        totalPriceElement.innerHTML = `Total Price: ₱${totalPrice.toFixed(2)}`;
-    }
-
-    // Function to remove item from cart
-    function removeItem(itemId) {
-        const index = cartData.findIndex(item => item.id === itemId);
-        if (index !== -1) {
-            cartData.splice(index, 1); // Remove item from array
-            document.getElementById("cart-container").innerHTML = ""; // Clear the cart container
-            displayCartItems(); // Re-display cart after removal
-        }
-    }
-
-    // Handle product selection change
-    document.body.addEventListener("change", (event) => {
-        if (event.target.classList.contains("select-product")) {
-            updateCart(); // Update cart when a product is selected or deselected
-        }
+        // Calculate total price
+        totalPrice += item.price * item.quantity;
     });
 
-    // Handle form submission (Checkout)
-    const checkoutForm = document.getElementById("checkout-form");
-    checkoutForm.addEventListener("submit", (event) => {
-        event.preventDefault(); // Prevent default form submission
+    totalPriceElement.textContent = `Subtotal: ₱${totalPrice.toFixed(2)}`;
+    return totalPrice;
+}
 
-        // Prepare the form data
-        const formData = new FormData(checkoutForm);
-        const cartDataJson = JSON.stringify(cartData); // Convert cart data to JSON
-        formData.append("cart_data", cartDataJson); // Add cart data to form data
+// Remove item from cart
+function removeFromCart(index) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.splice(index, 1); // Remove item at specified index
+    localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+    loadCart(); // Reload cart
+}
 
-        // Optionally, send the form data to the server (e.g., via AJAX or fetch)
-        console.log("Form data prepared for submission:", formData);
+// Update the quantity of an item
+function updateQuantity(index, change) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart[index]) {
+        cart[index].quantity += change;
 
-        // For demonstration, log the cart data and total price
-        alert("Checkout successful! The total price is: ₱" + totalPrice.toFixed(2));
-    });
+        // Ensure quantity doesn't go below 1
+        if (cart[index].quantity < 1) {
+            cart[index].quantity = 1;
+        }
 
-    // Display available products when the page loads
-    displayAvailableProducts();
-});
+        localStorage.setItem('cart', JSON.stringify(cart)); // Save updated cart
+        loadCart(); // Reload cart to reflect changes
+    }
+}
+
+// Handle checkout process
+function checkout() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const shippingCost = parseFloat(document.getElementById('shipping-method').value);
+    const totalPrice = loadCart() + shippingCost;
+
+    // Gather user details
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const email = document.getElementById('email').value;
+    const address = document.getElementById('address').value;
+    const city = document.getElementById('city').value;
+    const country = document.getElementById('country').value;
+
+    if (!firstName || !lastName || !email || !address || !city || !country) {
+        alert("Please fill out all fields.");
+        return;
+    }
+
+    // Confirmation alert
+    const confirmation = confirm(`Total Price (with shipping): ₱${totalPrice.toFixed(2)}\nProceed to checkout?`);
+    if (confirmation) {
+        alert(`Thank you for your purchase, ${firstName}!\n\nYour items will be shipped to:\n${address}, ${city}, ${country}`);
+        localStorage.removeItem('cart'); // Clear cart after checkout
+        loadCart(); // Reload empty cart
+    }
+}
+
+loadCart(); // Initial load of cart
