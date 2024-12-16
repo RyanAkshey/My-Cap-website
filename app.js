@@ -7,6 +7,7 @@ async function checkout(event) {
         return;
     }
 
+    // Collect user details
     const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
@@ -20,6 +21,7 @@ async function checkout(event) {
         return;
     }
 
+    // Calculate totals
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalPrice = subtotal + shippingMethod;
 
@@ -35,7 +37,8 @@ async function checkout(event) {
     };
 
     try {
-        const response = await fetch('process_order.php', {
+        // Send the order data to the backend
+        const response = await fetch('checkout.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,8 +49,19 @@ async function checkout(event) {
         const result = await response.text();
         if (response.ok) {
             alert("Order placed successfully!");
-            localStorage.removeItem('cart'); // Clear cart
-            window.location.href = "index.html"; // Redirect to homepage
+
+            // Clear the cart after a successful response
+            localStorage.removeItem('cart'); 
+            loadCart(); // Reload the cart to show it's empty
+
+            // Optionally redirect or display confirmation on the page
+            document.body.innerHTML = `
+                <div class="container">
+                    <h1>Thank you for your order, ${firstName}!</h1>
+                    <p>Your order has been placed successfully. A confirmation email has been sent to ${email}.</p>
+                    <button class="btn btn-primary" onclick="window.location.href='index.html'">Return to Home</button>
+                </div>
+            `;
         } else {
             console.error('Server error:', result);
             alert("Failed to place the order. Please try again.");
