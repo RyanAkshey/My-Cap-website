@@ -16,9 +16,11 @@ function loadCart() {
                 <h3>${item.name}</h3>
                 <p>Price: ₱${item.price}</p>
                 <p>Quantity: 
-                    <button onclick="updateQuantity(${index}, -1)">−</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                    <div class="quantity-btn-container">
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">−</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
                 </p>
             </div>
             <button onclick="removeFromCart(${index})">Remove</button>
@@ -32,7 +34,6 @@ function loadCart() {
     totalPriceElement.textContent = `Subtotal: ₱${totalPrice.toFixed(2)}`;
     return totalPrice;
 }
-
 // Remove item from cart
 function removeFromCart(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];

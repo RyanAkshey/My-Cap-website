@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Insert data into the database
     $items_list_db = $conn->real_escape_string(json_encode($cart_data));
-    $sql = "INSERT INTO orders (first_name, last_name, email, address, city, country, total_price, items)
-            VALUES ('$first_name', '$last_name', '$email', '$address', '$city', '$country', '$total_price', '$items_list_db')";
+    $sql = "INSERT INTO orders (first_name, last_name, email, address, city, shipping_method, subtotal, order_date)
+            VALUES ('$first_name', '$last_name', '$email', '$address', '$city', '$shipping_method', '$subtotal', '$order_date')";
 
     if ($conn->query($sql) === TRUE) {
         // Send email confirmation

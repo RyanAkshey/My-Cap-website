@@ -110,6 +110,38 @@
         .back-button:hover {
             background-color: #38393a;
         }
+        .quantity-btn {
+    background-color: #d3d3d3; /* Light gray color */
+    color: #333; /* Darker text for contrast */
+    border: 1px solid #bbb; /* Subtle border for metallic look */
+    border-radius: 4px;
+    padding: 3px 6px; /* Reduced padding for a compact look */
+    font-size: 14px; /* Smaller font size for better fit */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    width: 30px; /* Fixed width for consistency */
+    height: 30px; /* Fixed height for a square button */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center-align text/icons */
+}
+
+.quantity-btn:hover {
+    background-color: #c0c0c0; /* Slightly darker gray on hover */
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+.quantity-btn:active {
+    background-color: #a9a9a9; /* Even darker gray when pressed */
+}
+
+.quantity-btn-container {
+    display: flex;
+    gap: 5px; /* Add spacing between buttons */
+    align-items: center; /* Align buttons with the quantity text */
+}
+
+
 
     </style>
 </head>
@@ -119,7 +151,7 @@
         <h1>Shopping Cart</h1>
         <div id="cart-container"></div>
         <h2>Shipping Details</h2>
-        <form>
+        <form method="POST">
             <select id="shipping-method">
                 <option value="69.99">Flash Delivery - ₱69.99</option>
                 <option value="54.99">J&T Express - ₱54.99</option>
