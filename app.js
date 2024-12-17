@@ -31,7 +31,7 @@ function loadCart() {
         cart.forEach((item, index) => {
             cartContainer.innerHTML += `
                 <div class="cart-item">
-                    <img src="placeholder.jpg" alt="${item.name}">
+                   ${item.name}
                     <div>
                         <h3>${item.name}</h3>
                         <p>Price: ₱${item.price}</p>
