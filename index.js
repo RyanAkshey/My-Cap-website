@@ -84,7 +84,7 @@ userIcon.addEventListener('click', async () => {
       const password = prompt("Enter your password:");
 
       if (userName && email && password) {
-          const response = await fetch('path/to/Registration_api.php', {
+          const response = await fetch('path/to/Registration.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ userName, email, password })
