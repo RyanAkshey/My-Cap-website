@@ -18,11 +18,6 @@ function loadCart() {
     const cartContainer = document.getElementById('cart-container');
     const totalPriceElem = document.getElementById('total-price');
 
-    if (!cartContainer || !totalPriceElem) {
-        console.error("Required cart elements not found in the DOM.");
-        return;
-    }
-
     if (cart.length === 0) {
         cartContainer.innerHTML = "<p>Your cart is empty.</p>";
         totalPriceElem.textContent = "";
@@ -33,51 +28,52 @@ function loadCart() {
     cartContainer.innerHTML = cart.map(item => {
         totalPrice += item.price * item.quantity;
         return `
-            <div class="cart-item" id="cart-item-${item.id}">
-                <img src="${item.image}" alt="${item.name}" class="item-image">
-                <div class="item-details">
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}">
+                <div>
                     <h5>${item.name}</h5>
                     <p>Price: ₱${item.price.toFixed(2)}</p>
                     <p>
                         Quantity: 
-                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 'decrease')">-</button>
+                        <button onclick="updateQuantity('${item.id}', 'decrease')">-</button>
                         ${item.quantity}
-                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 'increase')">+</button>
+                        <button onclick="updateQuantity('${item.id}', 'increase')">+</button>
                     </p>
-                    <button class="remove-btn" onclick="removeItemFromCart('${item.id}')">Remove</button>
+                    <button onclick="removeItemFromCart('${item.id}')" class="remove-btn">Remove</button>
                 </div>
             </div>
         `;
     }).join("");
 
-
     totalPriceElem.textContent = `Total Price: ₱${totalPrice.toFixed(2)}`;
 }
 
-// Update the quantity of a cart item
+// Update cart quantity
 function updateQuantity(itemId, action) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const itemIndex = cart.findIndex(item => item.id === itemId);
 
-    if (itemIndex === -1) return;
+    if (itemIndex === -1) {
+        return;
+    }
 
     const item = cart[itemIndex];
-
-    // Adjust quantity based on action
+    
+    // Increase or decrease the quantity based on the action
     if (action === 'increase') {
         item.quantity++;
     } else if (action === 'decrease' && item.quantity > 1) {
         item.quantity--;
     }
 
-    // Save updated cart to localStorage
+    // Update the cart in localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    // Reload the cart to update UI
+    // Reload the cart to reflect the changes
     loadCart();
 }
 
-// Checkout function
+// Checkout function (same as before)
 async function checkout(event) {
     event.preventDefault();
 
@@ -87,7 +83,6 @@ async function checkout(event) {
         return;
     }
 
-    // Retrieve form values
     const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
@@ -96,13 +91,17 @@ async function checkout(event) {
     const city = document.getElementById('city').value.trim();
     const country = document.getElementById('country').value;
 
-    // Validate form inputs
+    // Validate the shipping method is correct
+    if (isNaN(shippingMethod) || shippingMethod < 0) {
+        alert("Invalid shipping method.");
+        return;
+    }
+
     if (!firstName || !lastName || !email || !address || !city || !country) {
         alert("Please fill out all fields.");
         return;
     }
 
-    // Calculate total price
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalPrice = subtotal + shippingMethod;
 
@@ -118,19 +117,19 @@ async function checkout(event) {
     };
 
     try {
-        // Send order data to server
         const response = await fetch('checkout.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(orderData),
         });
 
         const result = await response.json();
-
         if (response.ok && result.status === "success") {
             alert("Order placed successfully!");
-            localStorage.removeItem('cart');
 
+            localStorage.removeItem('cart');
             document.body.innerHTML = `
                 <div class="container">
                     <h1>Thank you for your order, ${firstName}!</h1>
@@ -147,5 +146,5 @@ async function checkout(event) {
     }
 }
 
-// Initial cart load on page load
-document.addEventListener('DOMContentLoaded', loadCart);
+// Initial cart load
+loadCart();
