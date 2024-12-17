@@ -48,8 +48,7 @@
     .btn:hover {
       background-color: #545454;
     }
-     /* Close button styles */
-     .close-btn {
+    .close-btn {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -65,30 +64,41 @@
   </style>
 </head>
 <body>
-  <!-- Background iframe -->
-  <iframe src="index.html"></iframe>
-  <button class="close-btn" onclick="closeLogin()">×</button> <!-- Close button -->
-  <!-- Authentication container -->
-  <div class="auth-container">
-    <img src="main logo.jpg" alt="Logo">
-    <h2>User Registration</h2>
-    <form action="register.php" method="POST" action="dbconn.php">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" name="name" class="form-control" id="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" name="email" class="form-control" id="email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" id="password" required>
-      </div>
-      <button type="submit" class="btn ">Register</button>
-    </form>
-  </div>
+   <!-- Background iframe -->
+   <iframe src="index.html" aria-hidden="true"></iframe>
 
-  <script src="index.js"></script>
+   <!-- Close button -->
+   <button class="close-btn" onclick="closeLogin()">×</button>
+ 
+   <!-- Authentication container -->
+   <div class="auth-container">
+     <img src="main logo.jpg" alt="Logo">
+     <h2>User Registration</h2>
+     <form action="Registration.php" method="POST">
+       <div class="form-group">
+         <label for="name">Name</label>
+         <input type="text" name="name" class="form-control" id="name" required>
+       </div>
+       <div class="form-group">
+         <label for="email">Email</label>
+         <input type="email" name="email" class="form-control" id="email" required>
+       </div>
+       <div class="form-group">
+         <label for="password">Password</label>
+         <input type="password" name="password" class="form-control" id="password" required>
+       </div>
+       <button type="submit" class="btn">Register</button>
+     </form>
+   </div>
+ 
+   <script>
+     // Close button functionality
+     function closeLogin() {
+       document.querySelector('.auth-container').style.display = 'none';
+     }
+ 
+    
+   </script>
+ 
 </body>
 </html>

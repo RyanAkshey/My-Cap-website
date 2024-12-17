@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sidebar styling */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 250px;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #555;
+        }
+
+        /* Main content styling */
+        .main-content {
+        flex-grow: 1;
+        padding: 20px;
+        background-image: url('bg.gif'); /* Replace with your image path */
+        background-size: cover; /* Ensures the image covers the entire div */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents image tiling */
+        color: #fff; /* Text color for better contrast */
+        text-shadow: 1px 1px 2px black; /* Optional text shadow for readability */
+        min-height: 100vh; /* Ensures content fills the screen height */
+        transition: opacity 0.3s ease-in-out;
+    }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: black;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li><a href="#" onclick="loadContent('profile')">Profile</a></li>
+            <li><a href="#" onclick="loadContent('order')">Order</a></li>
+            <li><a href="#" onclick="loadContent('logout')">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="content">
+        <h1>Welcome to the Dashboard</h1>
+        <p>Select an option from the sidebar.</p>
+    </div>
+
+  <script src="profile.js">
+    </script>
+</body>
+</html>

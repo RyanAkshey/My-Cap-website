@@ -49,7 +49,7 @@
 });
 
 
-  function closeRegistration() {
-    window.location.href = 'index.html'; // Redirect to the home page or another page
-  }
+     function closeLogin() {
+      document.querySelector('.auth-container').style.display = 'none';
+    }
 

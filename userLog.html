@@ -22,7 +22,7 @@
       width: 100%;
       height: 100%;
       border: none;
-      opacity: 1; /* Ensures full visibility of the iframe */
+      opacity: 1;
       z-index: -1;
     }
     .auth-container {
@@ -48,8 +48,8 @@
     .btn:hover {
       background-color: #0056b3;
     }
-     /* Close button styles */
-     .close-btn {
+    /* Close button styles */
+    .close-btn {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -66,14 +66,14 @@
 </head>
 <body>
   <!-- Background iframe -->
-  <iframe src="index.html"></iframe>
+  <iframe src="index.html" aria-hidden="true"></iframe>
 
   <!-- Authentication container -->
   <div class="auth-container">
     <button class="close-btn" onclick="closeLogin()">×</button> <!-- Close button -->
     <img src="main logo.jpg" alt="Logo">
     <h2>User Login</h2>
-    <form action="login.php" method="POST" action="dbconn.php">
+    <form action="login.php" method="POST">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" name="email" class="form-control" id="email" required>
@@ -87,6 +87,15 @@
     </form>
   </div>
 
-  <script src="index.js"></script>
+  <script>
+    // Close button functionality
+    function closeLogin() {
+      document.querySelector('.auth-container').style.display = 'none';
+    }
+     // User login/logout/register navigation
+     document.querySelector('.fa-user-circle-o').addEventListener('click', () => {
+       window.location.href = 'userLog.html'; // Redirect to login page
+     });
+  </script>
 </body>
 </html>
