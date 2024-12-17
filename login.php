@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"];
 
     // Check if the user exists in the database
-    $sql = "SELECT * FROM users WHERE email='$email'";
+    $sql = "SELECT * FROM userReg WHERE email='$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows === 1) {
@@ -17,16 +17,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($password, $user["password"])) {
             // Start a session and store user details
             session_start();
-            $_SESSION["user_id"] = $user["id"];
-            $_SESSION["user_name"] = $user["name"];
-            // Redirect to the user's profile/dashboard
-            header("Location: profile.html");  // Modify with your actual user profile page
+            $_SESSION["user_id"] = $user["id"];       // Assuming you have an 'id' column
+            $_SESSION["user_name"] = $user["userName"];  // Correct column for username
+
+            // Return success response
+            echo json_encode(["status" => "success", "message" => "Login successful."]);
             exit();
         } else {
-            echo "Invalid password.";
+            echo json_encode(["status" => "error", "message" => "Invalid password."]);
         }
     } else {
-        echo "User not found.";
+        echo json_encode(["status" => "error", "message" => "User not found."]);
     }
 }
 

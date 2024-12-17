@@ -88,23 +88,8 @@
     </form>
   </div>
 
-  <script>
-    // Close button functionality to redirect to index.html
-    function closeLogin() {
-      // Redirect to index.html when the close button is clicked
-      window.location.href = 'index.html';
-    }
-
-    // If you want to include user icon to navigate to login page
-    // Example, include FontAwesome for user icon (or add your own custom icon)
-    const userIcon = document.createElement('i');
-    userIcon.classList.add('fa', 'fa-user-circle-o');
-    document.body.appendChild(userIcon);
-
-    userIcon.addEventListener('click', () => {
-      window.location.href = 'userLog.html'; // Redirect to login page
-    });
-  </script>
+  <script src="index.js"></script>
+    
 
   <!-- Link to include FontAwesome icons for user icon -->
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>

@@ -1,22 +1,38 @@
-<?php 
-header("Content-Type: application/json");
+<?php
+header("Content-Type: application/json");  // Set JSON content type
+
 include 'dbconn.php';  // Connect to the database
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Sanitize and validate the form data
-    $name = mysqli_real_escape_string($conn, $_POST["userName"]);
-    $email = mysqli_real_escape_string($conn, $_POST["email"]);
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);  // Hash the password
+    // Check if all required fields are present
+    if (isset($_POST["userName"], $_POST["email"], $_POST["password"])) {
+        
+        // Sanitize input and hash password
+        $userName = trim($_POST["userName"]);
+        $email = trim($_POST["email"]);
+        $password = password_hash($_POST["password"], PASSWORD_DEFAULT);  // Hash the password
 
-    // Insert the user data into the database
-    $sql = "INSERT INTO users (userName, email, password) VALUES ('$userName', '$email', '$password')";
-  
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful. <a href='userLog.html'>Login here</a>";
+        // Use a prepared statement to insert data
+        $stmt = $conn->prepare("INSERT INTO userReg (userName, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $userName, $email, $password);
+
+        if ($stmt->execute()) {
+            // Successful registration response
+            echo json_encode(["status" => "success", "message" => "Registration successful"]);
+        } else {
+            // Database error response
+            echo json_encode(["status" => "error", "message" => "Error: " . $stmt->error]);
+        }
+
+        $stmt->close();  // Close statement
     } else {
-        echo "Error: " . $conn->error;
+        // Missing input fields response
+        echo json_encode(["status" => "error", "message" => "Missing required fields"]);
     }
+} else {
+    // Invalid request method response
+    echo json_encode(["status" => "error", "message" => "Invalid request method"]);
 }
 
-$conn->close();
+$conn->close();  // Close database connection
 ?>

@@ -18,6 +18,11 @@ function loadCart() {
     const cartContainer = document.getElementById('cart-container');
     const totalPriceElem = document.getElementById('total-price');
 
+    if (!cartContainer || !totalPriceElem) {
+        console.error("Required cart elements not found in the DOM.");
+        return;
+    }
+
     if (cart.length === 0) {
         cartContainer.innerHTML = "<p>Your cart is empty.</p>";
         totalPriceElem.textContent = "";
@@ -29,17 +34,17 @@ function loadCart() {
         totalPrice += item.price * item.quantity;
         return `
             <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
-                <div>
+                <img src="${item.image}" alt="${item.name}" class="item-image">
+                <div class="item-details">
                     <h5>${item.name}</h5>
                     <p>Price: ₱${item.price.toFixed(2)}</p>
                     <p>
                         Quantity: 
-                        <button onclick="updateQuantity('${item.id}', 'decrease')">-</button>
+                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 'decrease')">-</button>
                         ${item.quantity}
-                        <button onclick="updateQuantity('${item.id}', 'increase')">+</button>
+                        <button class="quantity-btn" onclick="updateQuantity('${item.id}', 'increase')">+</button>
                     </p>
-                    <button onclick="removeItemFromCart('${item.id}')" class="remove-btn">Remove</button>
+                    <button class="remove-btn" onclick="removeItemFromCart('${item.id}')">Remove</button>
                 </div>
             </div>
         `;
@@ -48,32 +53,30 @@ function loadCart() {
     totalPriceElem.textContent = `Total Price: ₱${totalPrice.toFixed(2)}`;
 }
 
-// Update cart quantity
+// Update the quantity of a cart item
 function updateQuantity(itemId, action) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const itemIndex = cart.findIndex(item => item.id === itemId);
 
-    if (itemIndex === -1) {
-        return;
-    }
+    if (itemIndex === -1) return;
 
     const item = cart[itemIndex];
-    
-    // Increase or decrease the quantity based on the action
+
+    // Adjust quantity based on action
     if (action === 'increase') {
         item.quantity++;
     } else if (action === 'decrease' && item.quantity > 1) {
         item.quantity--;
     }
 
-    // Update the cart in localStorage
+    // Save updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    // Reload the cart to reflect the changes
+    // Reload the cart to update UI
     loadCart();
 }
 
-// Checkout function (same as before)
+// Checkout function
 async function checkout(event) {
     event.preventDefault();
 
@@ -83,6 +86,7 @@ async function checkout(event) {
         return;
     }
 
+    // Retrieve form values
     const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
@@ -91,11 +95,13 @@ async function checkout(event) {
     const city = document.getElementById('city').value.trim();
     const country = document.getElementById('country').value;
 
+    // Validate form inputs
     if (!firstName || !lastName || !email || !address || !city || !country) {
         alert("Please fill out all fields.");
         return;
     }
 
+    // Calculate total price
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalPrice = subtotal + shippingMethod;
 
@@ -111,19 +117,19 @@ async function checkout(event) {
     };
 
     try {
+        // Send order data to server
         const response = await fetch('checkout.php', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(orderData),
         });
 
         const result = await response.json();
+
         if (response.ok && result.status === "success") {
             alert("Order placed successfully!");
-
             localStorage.removeItem('cart');
+
             document.body.innerHTML = `
                 <div class="container">
                     <h1>Thank you for your order, ${firstName}!</h1>
@@ -140,5 +146,5 @@ async function checkout(event) {
     }
 }
 
-// Initial cart load
-loadCart();
+// Initial cart load on page load
+document.addEventListener('DOMContentLoaded', loadCart);
