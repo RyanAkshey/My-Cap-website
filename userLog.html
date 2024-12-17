@@ -22,7 +22,7 @@
       width: 100%;
       height: 100%;
       border: none;
-      opacity: 1;
+      opacity: 0.3;
       z-index: -1;
     }
     .auth-container {
@@ -34,6 +34,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       background-color: #fff;
       text-align: center;
+      position: relative;
       z-index: 1;
     }
     .auth-container img {
@@ -92,10 +93,6 @@
     function closeLogin() {
       document.querySelector('.auth-container').style.display = 'none';
     }
-     // User login/logout/register navigation
-     document.querySelector('.fa-user-circle-o').addEventListener('click', () => {
-       window.location.href = 'userLog.html'; // Redirect to login page
-     });
   </script>
 </body>
 </html>
