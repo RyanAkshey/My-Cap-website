@@ -59,6 +59,7 @@ function updateQuantity(itemId, action) {
 
     const item = cart[itemIndex];
     
+    // Increase or decrease the quantity based on the action
     if (action === 'increase') {
         item.quantity++;
     } else if (action === 'decrease' && item.quantity > 1) {
