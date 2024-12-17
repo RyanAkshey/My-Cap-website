@@ -1,15 +1,9 @@
 // Remove item from the cart
 function removeItemFromCart(itemId) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Filter out the item with the given itemId
-    cart = cart.filter(item => item.id !== itemId);
-
-    // Update the cart in localStorage
+    cart = cart.filter(item => item.id !== itemId); // Remove item by ID
     localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Reload the cart to reflect the changes
-    loadCart();
+    loadCart(); // Reload the cart to reflect changes
 }
 
 // Load cart items on page load (if applicable)
@@ -50,7 +44,6 @@ function loadCart() {
         `;
     }).join("");
 
-
     totalPriceElem.textContent = `Total Price: ₱${totalPrice.toFixed(2)}`;
 }
 
@@ -63,17 +56,13 @@ function updateQuantity(itemId, action) {
 
     const item = cart[itemIndex];
 
-    // Adjust quantity based on action
     if (action === 'increase') {
         item.quantity++;
     } else if (action === 'decrease' && item.quantity > 1) {
         item.quantity--;
     }
 
-    // Save updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
-
-    // Reload the cart to update UI
     loadCart();
 }
 
@@ -87,7 +76,6 @@ async function checkout(event) {
         return;
     }
 
-    // Retrieve form values
     const shippingMethod = parseFloat(document.getElementById('shipping-method').value);
     const firstName = document.getElementById('first-name').value.trim();
     const lastName = document.getElementById('last-name').value.trim();
@@ -96,13 +84,11 @@ async function checkout(event) {
     const city = document.getElementById('city').value.trim();
     const country = document.getElementById('country').value;
 
-    // Validate form inputs
     if (!firstName || !lastName || !email || !address || !city || !country) {
         alert("Please fill out all fields.");
         return;
     }
 
-    // Calculate total price
     const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const totalPrice = subtotal + shippingMethod;
 
@@ -118,7 +104,6 @@ async function checkout(event) {
     };
 
     try {
-        // Send order data to server
         const response = await fetch('checkout.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -149,3 +134,4 @@ async function checkout(event) {
 
 // Initial cart load on page load
 document.addEventListener('DOMContentLoaded', loadCart);
+document.getElementById('checkout-form').addEventListener('submit', checkout); // Attach the event listener for checkout

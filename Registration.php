@@ -1,19 +1,14 @@
 <?php
-header("Content-Type: application/json");  // Set JSON content type
-
 include 'dbconn.php';  // Connect to the database
 
+// Set JSON content type
+header('Content-Type: application/json');
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  $input = file_get_contents("php://input");
-    $data = json_decode($input, true);
-    if (!$data) {
-      echo json_encode(["status" => "error", "message" => "Invalid JSON input."]);
-      exit;
-  }
     // Check if all required fields are present
     if (isset($_POST["userName"], $_POST["email"], $_POST["password"])) {
         
-        // Sanitize input and hash password
+        // Sanitize input and hash the password
         $userName = trim($_POST["userName"]);
         $email = trim($_POST["email"]);
         $password = password_hash($_POST["password"], PASSWORD_DEFAULT);  // Hash the password

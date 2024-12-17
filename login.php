@@ -1,6 +1,8 @@
-<?php 
-header("Content-Type: application/json");
+<?php
 include 'dbconn.php';  // Connect to the database
+
+// Set JSON content type
+header('Content-Type: application/json');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Sanitize the form input
