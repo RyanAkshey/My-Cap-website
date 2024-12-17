@@ -33,7 +33,7 @@ function loadCart() {
     cartContainer.innerHTML = cart.map(item => {
         totalPrice += item.price * item.quantity;
         return `
-            <div class="cart-item">
+            <div class="cart-item" id="cart-item-${item.id}">
                 <img src="${item.image}" alt="${item.name}" class="item-image">
                 <div class="item-details">
                     <h5>${item.name}</h5>
@@ -49,6 +49,7 @@ function loadCart() {
             </div>
         `;
     }).join("");
+
 
     totalPriceElem.textContent = `Total Price: ₱${totalPrice.toFixed(2)}`;
 }
