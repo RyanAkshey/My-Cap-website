@@ -139,4 +139,5 @@ async function checkout(event) {
     }
 }
 
+// Initial cart load
 loadCart();

@@ -1,4 +1,5 @@
 <?php 
+header("Content-Type: application/json");
 include 'dbconn.php';  // Connect to the database
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
